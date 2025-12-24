@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    image: royal-grace-backend:prod
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-jdbc:h2:file:/data/royalgrace}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+      CORS_ORIGINS: ${CORS_ORIGINS}
+      DEBUG_LEVEL: ${CORS_ORIGINS}
+      EMAIL_HOST: ${EMAIL_HOST}
+      EMAIL_USER_NAME: ${EMAIL_USER_NAME}
+      EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+    volumes:
+      - h2data:/data
+    # optional healthcheck could be added if actuator is enabled
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    image: royal-grace-frontend:prod
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_BACKEND_URL: ${NEXT_PUBLIC_BACKEND_URL:-http://backend:9091}
+    expose:
+      - "3000"
+    ports:
+      # Bind only to loopback so Nginx (on host) can reverse proxy
+      - "127.0.0.1:3000:3000"
+
+networks:
+  default:
+    name: royal-grace
+
+volumes:
+  h2data:

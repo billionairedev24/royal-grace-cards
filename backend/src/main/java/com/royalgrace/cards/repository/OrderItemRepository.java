@@ -1,0 +1,9 @@
+package com.royalgrace.cards.repository;
+
+import com.royalgrace.cards.model.OrderItem;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface OrderItemRepository extends JpaRepository<OrderItem, String> {
+}
