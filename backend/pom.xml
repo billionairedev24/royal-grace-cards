@@ -142,6 +142,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>royal-grace-backend</finalName>
     </build>
 
 </project>
