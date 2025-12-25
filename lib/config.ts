@@ -1,7 +1,3 @@
 export function getApiBaseUrl() {
-  if (typeof window !== "undefined") {
-    return ""
-  }
-
-  return process.env.INTERNAL_API_BASE_URL!
+  return process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:9091"
 }
