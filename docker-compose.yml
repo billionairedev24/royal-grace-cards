@@ -20,7 +20,7 @@ services:
       EMAIL_HOST: ${EMAIL_HOST}
       EMAIL_USER_NAME: ${EMAIL_USER_NAME}
       EMAIL_PASSWORD: ${EMAIL_PASSWORD}
-      INTERNAL_API_URL: http://backend:9091
+      INTERNAL_API_URL: https://royalgracecards.com
     volumes:
       - h2data:/data
     networks:
