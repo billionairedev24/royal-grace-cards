@@ -36,6 +36,7 @@ import { useToast } from "@/hooks/use-toast"
 import Image from "next/image"
 import * as XLSX from "xlsx"
 import { ConfirmDialog } from "@/components/ui/confirm-dialog"
+import {getApiBaseUrl} from "@/lib/config";
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState<ProductCard[]>([])
@@ -96,7 +97,7 @@ export default function AdminProductsPage() {
   const fetchProducts = async () => {
     try {
       setLoading(true)
-      const response = await fetch("/api/cards")
+      const response = await fetch(`${getApiBaseUrl()}/api/cart`)
       const data = await response.json()
       
       if (!response.ok) {
