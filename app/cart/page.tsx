@@ -11,6 +11,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import type { Config } from "@/lib/types"
+import {getApiBaseUrl} from "@/lib/config";
 
 export default function CartPage() {
   const router = useRouter()
@@ -20,7 +21,7 @@ export default function CartPage() {
   useEffect(() => {
     async function fetchConfig() {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/customer/config`, {
+        const response = await fetch(`${getApiBaseUrl()}/api/customer/config`, {
           credentials: "include",
         })
         const configData: Config = await response.json()

@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server"
+import {getApiBaseUrl} from "@/lib/config";
 
 // Proxy route to backend config endpoint for payment settings
 export async function GET() {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/customer/config`, {
+    const response = await fetch(`${getApiBaseUrl()}/api/customer/config`, {
       credentials: "include",
     })
 
@@ -31,7 +32,7 @@ export async function PUT(request: Request) {
   try {
     const paymentSettings = await request.json()
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/config`, {
+    const response = await fetch(`${getApiBaseUrl()}/api/admin/config`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

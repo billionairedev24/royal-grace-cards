@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
+import {getApiBaseUrl} from "@/lib/config";
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
@@ -11,7 +12,7 @@ export function proxy(request: NextRequest) {
 
     // If no session, redirect to backend login
     if (!session) {
-      const loginUrl = new URL(`${process.env.NEXT_PUBLIC_BACKEND_URL}/login`)
+      const loginUrl = new URL(`${getApiBaseUrl()}/login`)
       return NextResponse.redirect(loginUrl)
     }
   }

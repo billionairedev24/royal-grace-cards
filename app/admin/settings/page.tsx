@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Save, Truck, DollarSign, Store, QrCode, CreditCard, Upload, X } from "lucide-react"
 import type { Config } from "@/lib/types"
 import { useToast } from "@/hooks/use-toast"
+import {getApiBaseUrl} from "@/lib/config";
 
 export default function AdminSettingsPage() {
   const [config, setConfig] = useState<Config>({
@@ -41,7 +42,7 @@ export default function AdminSettingsPage() {
   const fetchSettings = async () => {
     try {
       setLoading(true)
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/config`, {
+      const response = await fetch(`${getApiBaseUrl()}/api/admin/config`, {
         credentials: "include",
       })
       if (!response.ok) {
@@ -66,7 +67,7 @@ export default function AdminSettingsPage() {
     setSaving(true)
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/config`, {
+      const response = await fetch(`${getApiBaseUrl()}/api/admin/config`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -112,7 +113,7 @@ export default function AdminSettingsPage() {
       formData.append("method", "zelle")
       formData.append("qrCode", file)
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/payment/qr-codes`, {
+      const response = await fetch(`${getApiBaseUrl()}/api/admin/payment/qr-codes`, {
         method: "POST",
         credentials: "include",
         body: formData,
@@ -153,7 +154,7 @@ export default function AdminSettingsPage() {
       formData.append("method", "cashapp")
       formData.append("qrCode", file)
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/payment/qr-codes`, {
+      const response = await fetch(`${getApiBaseUrl()}/api/admin/payment/qr-codes`, {
         method: "POST",
         credentials: "include",
         body: formData,

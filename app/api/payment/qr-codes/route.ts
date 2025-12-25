@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import type { Config } from "@/lib/types"
+import {getApiBaseUrl} from "@/lib/config";
 
 interface QRCodeConfig {
   qrCodeUrl: string
@@ -19,7 +20,7 @@ const uploadedQRCodes: Record<string, string> = {
 
 async function fetchConfig(): Promise<Config | null> {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/customer/config`, {
+    const response = await fetch(`${getApiBaseUrl()}/api/customer/config`, {
       credentials: "include",
     })
 

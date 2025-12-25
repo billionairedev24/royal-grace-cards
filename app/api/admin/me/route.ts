@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { cookies } from "next/headers"
+import {getApiBaseUrl} from "@/lib/config";
 
 
 export async function GET() {
@@ -11,7 +12,7 @@ export async function GET() {
       return NextResponse.json({ authenticated: false, message: "No session" }, { status: 401 })
     }
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/me`, {
+    const response = await fetch(`${getApiBaseUrl()}/api/admin/me`, {
       headers: {
         "Cookie": `JSESSIONID=${jsessionid}`,
       },

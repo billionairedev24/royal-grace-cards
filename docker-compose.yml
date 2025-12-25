@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   backend:
     build:
@@ -22,29 +20,31 @@ services:
       EMAIL_HOST: ${EMAIL_HOST}
       EMAIL_USER_NAME: ${EMAIL_USER_NAME}
       EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+      INTERNAL_API_URL: http://backend:9091
     volumes:
       - h2data:/data
-    # optional healthcheck could be added if actuator is enabled
+    networks:
+      - royal-grace
 
   frontend:
     build:
       context: .
       dockerfile: frontend/Dockerfile
+      args:
+        NEXT_PUBLIC_BACKEND_URL: ${NEXT_PUBLIC_BACKEND_URL}
     image: royal-grace-frontend:prod
+    container_name: royal-grace-frontend
     restart: unless-stopped
     depends_on:
       - backend
-    environment:
-      NEXT_PUBLIC_BACKEND_URL: http://backend:9091
-    expose:
-      - "3000"
     ports:
-      # Bind only to loopback so Nginx (on host) can reverse proxy
       - "127.0.0.1:3000:3000"
+    networks:
+      - royal-grace
 
 networks:
-  default:
-    name: royal-grace
+  royal-grace:
+    driver: bridge
 
 volumes:
   h2data:

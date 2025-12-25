@@ -2,8 +2,9 @@
 
 import { create } from "zustand"
 import type { CartItem, Card } from "./types"
+import {getApiBaseUrl} from "@/lib/config";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:9091"
+const BACKEND_URL = getApiBaseUrl()
 
 interface CartResponse {
     items: CartItem[]

@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { cookies } from "next/headers"
+import {getApiBaseUrl} from "@/lib/config";
 
 
 // Get all cards from backend
@@ -8,7 +9,7 @@ export async function GET() {
     const cookieStore = await cookies()
     const jsessionid = cookieStore.get("JSESSIONID")?.value
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cards`, {
+    const response = await fetch(`${getApiBaseUrl()}/api/cards`, {
       headers: {
         "Cookie": jsessionid ? `JSESSIONID=${jsessionid}` : "",
       },
@@ -40,7 +41,7 @@ export async function POST(request: NextRequest) {
     const cookieStore = await cookies()
     const jsessionid = cookieStore.get("JSESSIONID")?.value
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cards`, {
+    const response = await fetch(`${getApiBaseUrl()}/api/cards`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

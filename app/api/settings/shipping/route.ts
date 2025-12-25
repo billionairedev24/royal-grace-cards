@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server"
 import { cookies } from "next/headers"
+import {getApiBaseUrl} from "@/lib/config";
 
 
 // Get shipping settings from backend
 export async function GET() {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/settings/shipping`)
+    const response = await fetch(`${getApiBaseUrl()}/api/settings/shipping`)
     if (!response.ok) throw new Error(`Backend returned ${response.status}`)
     const data = await response.json()
     return NextResponse.json(data)
@@ -22,7 +23,7 @@ export async function PUT(request: Request) {
     const cookieStore = await cookies()
     const jsessionid = cookieStore.get("JSESSIONID")?.value
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/settings/shipping`, {
+    const response = await fetch(`${getApiBaseUrl()}/api/settings/shipping`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

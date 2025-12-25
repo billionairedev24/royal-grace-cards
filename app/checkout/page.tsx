@@ -15,6 +15,7 @@ import { ArrowLeft, CreditCard, Smartphone } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useToast } from "@/hooks/use-toast"
+import {getApiBaseUrl} from "@/lib/config";
 
 export default function CheckoutPage() {
   const router = useRouter()
@@ -44,7 +45,7 @@ export default function CheckoutPage() {
   useEffect(() => {
     async function fetchConfig() {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/customer/config`, {
+        const response = await fetch(`${getApiBaseUrl()}/api/customer/config`, {
           credentials: "include",
         })
         const configData: Config = await response.json()
@@ -152,7 +153,7 @@ export default function CheckoutPage() {
 
       console.log("[v0] Sending order data:", JSON.stringify(orderData, null, 2))
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/payment/checkout`, {
+      const response = await fetch(`${getApiBaseUrl()}/api/payment/checkout`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json" ,

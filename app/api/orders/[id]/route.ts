@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server"
+import {getApiBaseUrl} from "@/lib/config";
 
 // Proxy to backend API for single order operations
 export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
 
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders/${id}`, {
+    const response = await fetch(`${getApiBaseUrl()}/api/orders/${id}`, {
       headers: {
         Cookie: request.headers.get("cookie") || "",
       },
@@ -29,7 +30,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
   const body = await request.json()
 
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders/${id}/status`, {
+    const response = await fetch(`${getApiBaseUrl()}/api/orders/${id}/status`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +56,7 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
   const { id } = await params
 
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders/${id}`, {
+    const response = await fetch(`${getApiBaseUrl()}/api/orders/${id}`, {
       method: "DELETE",
       headers: {
         Cookie: request.headers.get("cookie") || "",

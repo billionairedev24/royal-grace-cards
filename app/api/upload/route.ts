@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { cookies } from "next/headers"
+import {getApiBaseUrl} from "@/lib/config";
 
 // Proxy image upload to backend
 export async function POST(request: Request) {
@@ -8,7 +9,7 @@ export async function POST(request: Request) {
     const cookieStore = await cookies()
     const jsessionid = cookieStore.get("JSESSIONID")?.value
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/upload`, {
+    const response = await fetch(`${getApiBaseUrl()}/api/upload`, {
       method: "POST",
       headers: {
         "Cookie": jsessionid ? `JSESSIONID=${jsessionid}` : "",

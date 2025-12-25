@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { LayoutDashboard, Package, Settings, LogOut, ShoppingBag } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import Link from "next/link"
+import {getApiBaseUrl} from "@/lib/config";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
@@ -22,7 +23,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       const response = await fetch("/api/admin/me")
       if (!response.ok) {
         if (response.status === 401) {
-          window.location.href = "http://localhost:9091/login"
+          window.location.href = `${getApiBaseUrl()}/login`
           return
         }
         throw new Error("Failed to check session")
@@ -30,14 +31,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       setChecking(false)
     } catch (error) {
       console.error("Session check error:", error)
-      window.location.href = "http://localhost:9091/login"
+      window.location.href = `${getApiBaseUrl()}/login`
     }
   }
 
   const handleLogout = async () => {
     try {
       // First redirect to backend logout which will clear session and cookie
-      window.location.href = "http://localhost:9091/logout?logout"
+      window.location.href = `${getApiBaseUrl()}/logout?logout`
     } catch (error) {
       console.error("Logout error:", error)
       toast({

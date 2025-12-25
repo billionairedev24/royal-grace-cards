@@ -8,6 +8,7 @@ import { CheckCircle, Package, MapPin, CreditCard, Mail, Phone } from "lucide-re
 import Link from "next/link"
 import Image from "next/image"
 import type { Order } from "@/lib/types"
+import {getApiBaseUrl} from "@/lib/config";
 
 // Helper function to mask email addresses for privacy
 function maskEmail(email: string): string {
@@ -41,7 +42,7 @@ function PaymentSuccessContent() {
 
     const fetchOrderBySessionId = async (paymentSessionId: string) => {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders/session/${paymentSessionId}`, {
+            const response = await fetch(`${getApiBaseUrl()}/api/orders/session/${paymentSessionId}`, {
                 credentials: "include",
             })
 

@@ -1,12 +1,13 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { cookies } from "next/headers"
+import {getApiBaseUrl} from "@/lib/config";
 
 
 // Get single card from backend
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cards/${id}`)
+    const response = await fetch(`${getApiBaseUrl()}/api/cards/${id}`)
     if (!response.ok) {
       return NextResponse.json({ error: "Card not found" }, { status: response.status })
     }
@@ -26,7 +27,7 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     const cookieStore = await cookies()
     const jsessionid = cookieStore.get("JSESSIONID")?.value
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cards/${id}`, {
+    const response = await fetch(`${getApiBaseUrl()}/api/cards/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -54,7 +55,7 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
     const cookieStore = await cookies()
     const jsessionid = cookieStore.get("JSESSIONID")?.value
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cards/${id}`, {
+    const response = await fetch(`${getApiBaseUrl()}/api/cards/${id}`, {
       method: "DELETE",
       headers: {
         "Cookie": jsessionid ? `JSESSIONID=${jsessionid}` : "",
