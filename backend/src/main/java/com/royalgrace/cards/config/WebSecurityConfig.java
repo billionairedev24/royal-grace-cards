@@ -55,7 +55,7 @@ public class WebSecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .defaultSuccessUrl("${baseUrl}/admin", true)
+                        .defaultSuccessUrl("/admin", true)
                         .permitAll()
                 )
                 .logout(Customizer.withDefaults())
